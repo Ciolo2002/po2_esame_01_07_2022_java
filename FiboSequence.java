@@ -1,8 +1,9 @@
+import java.util.ArrayList;
 import java.util.Iterator;
 
 public class FiboSequence implements Iterable<Integer>{
     private  Integer max_items;
-
+    private static ArrayList<Integer> cache=new ArrayList<>();
     private Integer done_item=0;
 
     public FiboSequence(Number i){
@@ -17,7 +18,14 @@ public class FiboSequence implements Iterable<Integer>{
            }
 
            public Integer next() {
-              return fibonacci(max_items);
+               if(cache.size()>=max_items){
+                   done_item=max_items;
+                   return cache.get(max_items);
+               }
+               for(int i=0;i<=max_items;i++){
+                   cache.add(fibonacci(i));
+               }
+              return cache.get(max_items);
            }
 
            private Integer  fibonacci(Integer  n)  {
@@ -33,8 +41,12 @@ public class FiboSequence implements Iterable<Integer>{
    }
 
     public static void main(String[] args) {
-        for (int n : new FiboSequence(100)) {
+        for (int n : new FiboSequence(35)) {
             System.out.println(n);
         }
+        for (int n : new FiboSequence(30)) {
+            System.out.println(n);
+        }
+
     }
 }
